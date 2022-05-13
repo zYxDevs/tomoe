@@ -31,7 +31,7 @@ async def get_sim(id: str = choose().simply):
     print(f"Total image: {len(img)}")
 
     tags = parser["tags"]
-    tags = [tag for tag in tags]
+    tags = list(tags)
     print(f"Tags: {tags}")
 
     neat_dir = f"{split_name(__file__)}-{title}"
@@ -71,7 +71,7 @@ async def get_sim(id: str = choose().simply):
                 )
                 print(f"Directory: {os.path.abspath(neat_dir)}")
 
-                with open(neat_dir + "/tomoe.html", "x", encoding="utf-8") as f:
+                with open(f"{neat_dir}/tomoe.html", "x", encoding="utf-8") as f:
                     f.write("<html><center><body>")
                     f.write(f"<h1>{neat_dir}</h1>")
 
@@ -105,15 +105,15 @@ async def get_sim(id: str = choose().simply):
 
                     elif to_pdf == "n":
                         print("Okay")
-                        os.remove(neat_dir + "/tomoe.html")
+                        os.remove(f"{neat_dir}/tomoe.html")
                         return
 
                     else:
                         print("Invalid input")
-                        os.remove(neat_dir + "/tomoe.html")
+                        os.remove(f"{neat_dir}/tomoe.html")
                         return
 
                 except TimeoutOccurred:
                     print("Timeout occurred")
-                    os.remove(neat_dir + "/tomoe.html")
+                    os.remove(f"{neat_dir}/tomoe.html")
                     exit()

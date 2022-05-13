@@ -33,8 +33,7 @@ def choose():
         "--asmhentai", "-asmhentai", action="store", metavar=("ID"), type=int
     )
 
-    args = my_parser.parse_args()
-    return args
+    return my_parser.parse_args()
 
 
 def split_name(string):
@@ -50,8 +49,7 @@ def split_name(string):
     name : str
         Name of the file
     """
-    get_name = os.path.basename(string).split(".")[0]
-    return get_name
+    return os.path.basename(string).split(".")[0]
 
 
 def get_size(string):
@@ -67,8 +65,7 @@ def get_size(string):
     size : int
         Size of the file
     """
-    file = round(os.path.getsize(string) / 1024 / 1024, 2)
-    return file
+    return round(os.path.getsize(string) / 1024 / 1024, 2)
 
 
 def get_size_folder(folder):
@@ -107,10 +104,9 @@ def convert_html_to_pdf(source_html, output_filename):
         Path to pdf file
     """
 
-    result_file = open(output_filename, "w+b")
-    pisa_status = pisa.CreatePDF(source_html, dest=result_file)
+    with open(output_filename, "w+b") as result_file:
+        pisa_status = pisa.CreatePDF(source_html, dest=result_file)
 
-    result_file.close()
     return pisa_status.err
 
 
