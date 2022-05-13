@@ -38,7 +38,7 @@ async def get_h2r(id: str = par1, chapter: int = par2):
 
     img = parser["images"]
     print(f"Total image: {len(img)}")
-    neat_dir = split_name(__file__) + " - " + title
+    neat_dir = f"{split_name(__file__)} - {title}"
 
     set_name = parser["currentURL"]
     set_name = set_name.split("/")[-3]
@@ -60,13 +60,14 @@ async def get_h2r(id: str = par1, chapter: int = par2):
         img_name = img_url.rsplit("/", 1)[-1]
 
         r = requests.get(f"https://static.hentaicdn.com/hentai{img_url}")
-        with open(neat_dir + "/" + img_name, "wb") as f:
+        with open(f"{neat_dir}/{img_name}", "wb") as f:
             f.write(r.content)
 
-            if os.path.exists(neat_dir + "/" + img_name):
+            if os.path.exists(f"{neat_dir}/{img_name}"):
                 print(
-                    f'Successfully downloaded {img_name} | {get_size(neat_dir + "/" + img_name)} MB | took {time.time() - start:.2f} seconds'
+                    f"Successfully downloaded {img_name} | {get_size(f'{neat_dir}/{img_name}')} MB | took {time.time() - start:.2f} seconds"
                 )
+
 
             if len(img) == len(os.listdir(neat_dir)):
 
@@ -75,7 +76,7 @@ async def get_h2r(id: str = par1, chapter: int = par2):
                 )
                 print(f"Directory: {os.path.abspath(neat_dir)}")
 
-                with open(neat_dir + "/tomoe.html", "x", encoding="utf-8") as f:
+                with open(f"{neat_dir}/tomoe.html", "x", encoding="utf-8") as f:
                     f.write("<html><center><body>")
                     f.write(f"<h1>{set_name}</h1>")
 
@@ -110,15 +111,15 @@ async def get_h2r(id: str = par1, chapter: int = par2):
 
                     elif to_pdf == "n":
                         print("Okay")
-                        os.remove(neat_dir + "/tomoe.html")
+                        os.remove(f"{neat_dir}/tomoe.html")
                         return
 
                     else:
                         print("Invalid input")
-                        os.remove(neat_dir + "/tomoe.html")
+                        os.remove(f"{neat_dir}/tomoe.html")
                         return
 
                 except TimeoutOccurred:
                     print("Timeout occurred")
-                    os.remove(neat_dir + "/tomoe.html")
+                    os.remove(f"{neat_dir}/tomoe.html")
                     exit()
